@@ -1,20 +1,3 @@
-// const mongoose = require('mongoose');
-
-
-// const UserSchema = new mongoose.Schema({
-// name: { type: String, required: true },
-// email: { type: String, required: true, unique: true, lowercase: true },
-// passwordHash: { type: String, required: true },
-// role: { type: String, enum: ['giver','receiver','admin'], default: 'receiver' },
-// phone: { type: String },
-// location: {
-// address: String,
-// coords: { type: { type: String, default: 'Point' }, coordinates: [Number] }
-// },
-// createdAt: { type: Date, default: Date.now }
-// });
-// UserSchema.index({ 'location.coords': '2dsphere' });
-// module.exports = mongoose.model('User', UserSchema);
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
@@ -43,3 +26,4 @@ userSchema.methods.matchPassword = async function (pwd) {
 };
 
 export default mongoose.model("User", userSchema);
+

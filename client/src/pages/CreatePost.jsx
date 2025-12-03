@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../services/api";
+import { apiCall } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
@@ -18,10 +18,16 @@ export default function CreatePost() {
     const fd = new FormData();
     Object.entries(form).forEach(([k, v]) => fd.append(k, v));
 
-    await api.post("/posts", fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
+    try {
+      await api.post("/posts", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (err) {
+      console.error("Post creation failed:", err);
+      alert("Post creation failed. Please try again.");
+      return;
+    }
+   
     navigate("/");
   };
 
@@ -46,7 +52,7 @@ export default function CreatePost() {
       <input type="file" className="w-full mb-3"
         onChange={(e) => setForm({ ...form, image: e.target.files[0] })} />
 
-      <button className="w-full bg-green-600 text-white p-2 rounded">
+      <button className="w-full bg-green-600 text-white p-2 rounded " onClick={submit}>
         Submit
       </button>
     </form>
